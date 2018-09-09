@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".SearchActivity">
+
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Manufacturer"
+        android:inputType="text"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/manufacturer_input"/>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Model"
+        android:inputType="text"
+
+        android:layout_marginBottom="40dp"
+        android:id="@+id/model_input"/>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:hint="MinimumPrice"
+        android:inputType="number"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/min_price"/>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_gravity="center"
+        android:hint="MaximumPrice"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/max_price"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/find"
+
+        android:text="search"/>
+
+</LinearLayout>

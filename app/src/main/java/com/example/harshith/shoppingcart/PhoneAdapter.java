@@ -23,13 +23,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PhoneAdapter extends RecyclerView.Adapter<PhoneView>  {
+public class PhoneAdapter extends RecyclerView.Adapter<PhoneView> {
 
    private List<Phone> phone;
+   ViewClickListener mlistener;
 
    private Context context;
 
-   public PhoneAdapter(List<Phone> phone,Context context){
+   public PhoneAdapter(List<Phone> phone,Context context,ViewClickListener mlistener){
+       this.mlistener = mlistener ;
        this.context = context;
        this.phone = phone;
    }
@@ -37,7 +39,7 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneView>  {
     @Override
     public PhoneView onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.phones,parent,false);
-        PhoneView p = new PhoneView(view);
+        PhoneView p = new PhoneView(view,mlistener);
         return p;
    }
 
@@ -53,65 +55,7 @@ public class PhoneAdapter extends RecyclerView.Adapter<PhoneView>  {
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                Log.i("cess","3");
-                View view = LayoutInflater.from(context).inflate(R.layout.dialog,null);
-                builder.setView(view);
-
-                final EditText editText = view.findViewById(R.id.username);
-
-                final EditText editText1 = view.findViewById(R.id.quantity);
-
-
-                builder.setTitle("Info :");
-
-                Log.i("Suc","4");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Retrofit retrofit = new Retrofit.Builder().baseUrl(Api.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-
-                        Api api = retrofit.create(Api.class);
-
-                        Call<Sales> call = api.getBuy(ph,editText.getText().toString(),editText1.getText().toString());
-                        call.enqueue(new Callback<Sales>() {
-
-                            @Override
-                            public void onResponse(Call<Sales> call, Response<Sales> response) {
-                                Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onFailure(Call<Sales> call, Throwable t) {
-                                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-
-                        });
-                        Log.i("Sucess","5");
-
-                    }
-                });
-
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.i("Sucess","6");
-                        Toast.makeText(context, "cancelled", Toast.LENGTH_SHORT).show();
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-                Log.i("ss","7");
-                AlertDialog alertDialog=builder.create();
-                try {
-                    alertDialog.show();
-                } catch (Exception e) {
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+                mlistener.onClick(v,position);
             }
         });
     }

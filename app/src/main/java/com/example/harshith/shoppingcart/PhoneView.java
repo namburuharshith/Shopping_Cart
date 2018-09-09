@@ -11,21 +11,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class PhoneView extends RecyclerView.ViewHolder {
+public class PhoneView extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    private ViewClickListener mlistener;
     private TextView txt;
     private TextView txt1;
     private TextView txt2;
     private ImageView image;
     private CardView layout;
 
-    public PhoneView(View view) {
+    public PhoneView(View view, ViewClickListener listener) {
         super(view);
+        this.mlistener = listener;
         this.image = view.findViewById(R.id.image);
         this.txt = view.findViewById(R.id.model);
         this.txt1 = view.findViewById(R.id.manufacturer);
         this.txt2 = view.findViewById(R.id.price);
         this.layout = view.findViewById(R.id.cardview);
+        view.setOnClickListener(this);
     }
 
     public TextView getTxt() {
@@ -45,4 +48,9 @@ public class PhoneView extends RecyclerView.ViewHolder {
     }
 
     public CardView getView(){ return layout;}
+
+    @Override
+    public void onClick(View v) {
+        mlistener.onClick(v,getAdapterPosition());
+    }
 }
